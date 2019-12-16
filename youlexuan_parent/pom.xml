@@ -67,7 +67,7 @@
         <zookeeper.version>3.4.10</zookeeper.version>
         <curator-recipes.version>4.0.1</curator-recipes.version>
 
-        <activemq.version>5.15.8</activemq.version>
+        <activemq.version>5.15.9</activemq.version>
         <solrj.version>6.0.0</solrj.version>
         <jedis.version>2.9.0</jedis.version>
 
