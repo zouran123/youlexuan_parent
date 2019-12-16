@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:solr="http://www.springframework.org/schema/data/solr"
+       xsi:schemaLocation="http://www.springframework.org/schema/data/solr
+  		http://www.springframework.org/schema/data/solr/spring-solr.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- solr服务器地址 -->
+    <!--<solr:solr-server id="solrServer" url="http://192.168.220.128:8983/solr/core1" />-->
+
+    <bean id="solrServer" class="org.apache.solr.client.solrj.impl.CloudSolrClient">
+        <constructor-arg
+                value="192.168.220.129:2181,192.168.220.132:2181,192.168.220.133:2181" />
+        <property name="defaultCollection" value="core1" />
+    </bean>
+
+    <!-- solr模板，使用solr模板可对索引库进行CRUD操作 -->
+    <bean id="solrTemplate" class="org.springframework.data.solr.core.SolrTemplate">
+        <constructor-arg ref="solrServer" />
+    </bean>
+
+</beans>

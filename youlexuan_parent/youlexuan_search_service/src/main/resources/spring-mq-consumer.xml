@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供 -->
+    <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://192.168.220.128:61616" />
+    </bean>
+
+    <!-- Spring用于管理ConnectionFactory的ConnectionFactory -->
+    <bean id="connectionFactory"
+          class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="targetConnectionFactory" />
+    </bean>
+
+    <!-- 导入solr的队列：消费端 -->
+    <bean id="youlexuanImportSolrQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="youlexuan_importsolr_queue" />
+    </bean>
+
+    <!-- 消息监听容器 -->
+    <bean
+            class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="youlexuanImportSolrQueue" />
+        <property name="messageListener" ref="importSolrListen" />
+    </bean>
+
+    <!-- 删除solr的队列：消费端 -->
+    <bean id="youlexuanDelSolrQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="youlexuan_delsolr_queue" />
+    </bean>
+    <!-- 消息监听容器 -->
+    <bean
+            class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="youlexuanDelSolrQueue" />
+        <property name="messageListener" ref="delSolrListen" />
+    </bean>
+
+
+</beans>
