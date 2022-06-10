@@ -63,7 +63,7 @@
 
         <fastjson.version>1.2.48</fastjson.version>
 
-        <dubbo.version>2.6.4</dubbo.version>
+        <dubbo.version>2.6.12</dubbo.version>
         <zookeeper.version>3.4.10</zookeeper.version>
         <curator-recipes.version>4.0.1</curator-recipes.version>
 
